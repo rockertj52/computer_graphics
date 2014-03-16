@@ -1,5 +1,5 @@
 //3D SIERPINSKI GASKET
-
+//But this is a Big Code..Not Recommended!!
 #include<stdlib.h>
 #include<stdio.h>
 #include<GL/glut.h>
