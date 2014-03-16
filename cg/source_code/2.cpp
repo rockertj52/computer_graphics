@@ -1,7 +1,7 @@
 //LIANG-BARSKY LINE CLIPPING ALGORITHM
 
 #include<stdio.h>
-#include<GL/glut.h>
+#include<glut.h>
 double xmin=50,ymin=50,xmax=100,ymax=100;
 double xvmin=200,yvmin=200,xvmax=300,yvmax=300;
 double x0,y0,x1,y1;

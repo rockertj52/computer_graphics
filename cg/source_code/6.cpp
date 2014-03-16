@@ -1,102 +1,43 @@
-//CYLINDER AND PARALLELEPIPED
-
-#include<GL/glut.h>
-#include<math.h>
-#include<stdio.h>
-
-void draw_pixel(GLint cx, GLint cy)
+#include <math.h>
+#include <glut.h>
+void objects(float cx, float cy, float r, int nums)
 {
-	glColor3f(1.0,0.0,0.0);
-	glBegin(GL_POINTS);
-		glVertex2i(cx, cy);
+	//glColor3f(1,0,0);
+	glBegin(GL_LINE_LOOP); //circle
+	for (int ii = 0; ii<nums; ii++)
+	{
+		float theta = 2.0*3.1415926*float(ii) / float(nums);
+		float x = r*cosf(theta);
+		float y = r*sinf(theta);
+		glVertex2f(x + cx, y + cy);
+	}
+	glEnd();
+	//glColor3f(0,1,0);
+	glBegin(GL_LINE_LOOP);  //Rectangle
+	glVertex2f(0.0, 0.0);
+	glVertex2f(0.5, 0.0);
+	glVertex2f(0.5, 0.5);
+	glVertex2d(0.0, 0.5);
 	glEnd();
 }
-
-void plotpixels(GLint h, GLint k, GLint x, GLint y)
-{
-	draw_pixel(x+h, y+k);
-	draw_pixel(-x+h, y+k);
-	draw_pixel(x+h, -y+k);
-	draw_pixel(-x+h, -y+k);
-	draw_pixel(y+h, x+k);
-	draw_pixel(-y+h, x+k);
-	draw_pixel(y+h, -x+k);
-	draw_pixel(-y+h, -x+k);
-}
-
-void circle_draw(GLint h, GLint k, GLint r)
-{
-	GLint d=1-r, x=0,y=r;
-	while(y>x)
-	{
-		plotpixels(h, k, x, y);
-		if(d<0) d+=2*x+3;
-		else
-		{
-			d+=2*(x-y)+5;
-			--y;
-		}
-		++x;
-	}
-	plotpixels(h, k, x, y);
-}
-
-void cylinderdraw()
-{
-	GLint xc=100,yc=100,r=50; 
-GLint i, n=50;
-	for(i=0;i<n;i+=3)
-	{
-		circle_draw(xc, yc+i, r);
-	}
-}
-
-void parallelpiped(int x1, int x2, int y1, int y2)
-{
-	glColor3f(0.0,0.0,1.0);
-	glPointSize(2.0);
-	glBegin(GL_LINE_LOOP);
-		glVertex2i(x1,y1);
-		glVertex2i(x2,y1);
-		glVertex2i(x2,y2);
-		glVertex2i(x1,y2);
-	glEnd();
-}
-
-void parallelpiped_draw()
-{
-	int x1=200,x2=300,y1=100,y2=175;
-	GLint i, n=40;
-	for(i=0;i<n;i+=2)
-	{
-		parallelpiped(x1+i,x2+i,y1+i,y2+i);
-	}
-}
-
-void init(void)
-{
-	glClearColor(1.0,1.0,1.0,0.0);
-	glMatrixMode(GL_PROJECTION);
-	gluOrtho2D(0.0,400.0,0.0,300.0);
-}
-
-void display(void)
+void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	glColor3f(1.0,0.0,0.0);
-	cylinderdraw();
-	parallelpiped_draw();
+	glViewport(0, 0, 700, 700);
+	glTranslated(-0.4, 0, 0);
+	for (int i = 0; i<30; i++)  //No. of extrudes
+	{
+		glTranslated(0.01, 0.01, 0);
+		objects(0.4, -0.7, 0.3, 56);
+	}
 	glFlush();
+	glLoadIdentity();
 }
-
-void main(int argc, char **argv)
+int main(void)
 {
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
-	glutInitWindowPosition(50,50);
-	glutInitWindowSize(400,300);
-	glutCreateWindow("Cylinder & ParralelPiped");
-	init();
+	glutInitWindowSize(700, 700);
+	glutCreateWindow("6Th Program Optimized by R.Ganesh");
 	glutDisplayFunc(display);
 	glutMainLoop();
+	return 0;
 }
